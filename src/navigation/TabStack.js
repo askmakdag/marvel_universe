@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {faCoffee} from '@fortawesome/free-solid-svg-icons';
+import {
+  faStar,
+  faBookReader,
+  faBookDead,
+  faBookOpen,
+} from '@fortawesome/free-solid-svg-icons';
 import {tabBarOptions} from '../common/constants';
 import ComicStackScreen from './ComicStack';
 import CharacterStackScreen from './CharacterStack';
@@ -14,13 +19,15 @@ class TabStack extends Component {
       <Tab.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {
-            let type, icon_color, icon_size;
+            let type, icon_color, icon_size, icon;
 
             if (route.name === 'COMICS') {
+              icon = faBookDead;
               type = focused ? 'solid' : 'light';
               icon_color = focused ? '#C70039' : 'gray';
               icon_size = focused ? 24 : 23;
             } else if (route.name === 'CHARACTERS') {
+              icon = faStar;
               type = focused ? 'solid' : 'light';
               icon_color = focused ? '#C70039' : 'gray';
               icon_size = focused ? 24 : 23;
@@ -29,7 +36,7 @@ class TabStack extends Component {
             // You can return any component that you like here!
             return (
               <FontAwesomeIcon
-                icon={faCoffee}
+                icon={icon}
                 color={icon_color}
                 type={type}
                 size={icon_size}
