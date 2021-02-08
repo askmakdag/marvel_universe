@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {faCoffee} from '@fortawesome/free-solid-svg-icons';
+import {tabBarOptions} from '../common/constants';
 import ComicStackScreen from './ComicStack';
 import CharacterStackScreen from './CharacterStack';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faCoffee} from '@fortawesome/free-solid-svg-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,13 +16,13 @@ class TabStack extends Component {
           tabBarIcon: ({focused, color, size}) => {
             let type, icon_color, icon_size;
 
-            if (route.name === 'Comics') {
+            if (route.name === 'COMICS') {
               type = focused ? 'solid' : 'light';
-              icon_color = focused ? 'red' : 'gray';
+              icon_color = focused ? '#C70039' : 'gray';
               icon_size = focused ? 24 : 23;
-            } else if (route.name === 'Characters') {
+            } else if (route.name === 'CHARACTERS') {
               type = focused ? 'solid' : 'light';
-              icon_color = focused ? 'red' : 'gray';
+              icon_color = focused ? '#C70039' : 'gray';
               icon_size = focused ? 24 : 23;
             }
 
@@ -36,15 +37,9 @@ class TabStack extends Component {
             );
           },
         })}
-        tabBarOptions={{
-          inactiveTintColor: 'gray',
-          showLabel: false,
-          style: {
-            backgroundColor: 'black',
-          },
-        }}>
-        <Tab.Screen name="Comics" component={ComicStackScreen} />
-        <Tab.Screen name="Characters" component={CharacterStackScreen} />
+        tabBarOptions={tabBarOptions}>
+        <Tab.Screen name="COMICS" component={ComicStackScreen} />
+        <Tab.Screen name="CHARACTERS" component={CharacterStackScreen} />
       </Tab.Navigator>
     );
   };

@@ -43,5 +43,17 @@ export const headerScreenOptions = {
   headerTintColor: 'white',
 };
 
+export const tabBarOptions = {
+  activeTintColor: '#C70039',
+  inactiveTintColor: 'gray',
+  showLabel: true,
+  style: {
+    backgroundColor: 'black',
+  },
+  labelStyle: {
+    fontWeight: 'bold',
+  },
+};
+
 export const DEVICE_HEIGHT = Dimensions.get('window').height;
 export const DEVICE_WIDTH = Dimensions.get('window').width;

@@ -13,7 +13,7 @@ export default function CharacterStackScreen() {
         name="Characters"
         component={Characters}
         options={({navigation, route}) => ({
-          title: 'Characters',
+          title: 'MARVEL CHARACTERS',
           ...headerScreenOptions,
         })}
       />

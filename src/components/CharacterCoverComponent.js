@@ -3,8 +3,10 @@ import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DEVICE_WIDTH} from '../common/constants';
 
 class CharacterCoverComponent extends Component {
-  navigateToDetails = () => {
-    this.props.navigation.push('CharacterDetails');
+  navigateToDetails = (title) => {
+    this.props.navigation.push('CharacterDetails', {
+      header_title: title,
+    });
   };
 
   render() {
@@ -12,7 +14,7 @@ class CharacterCoverComponent extends Component {
     return (
       <TouchableOpacity
         style={styles.containerStyle}
-        onPress={this.navigateToDetails}>
+        onPress={() => this.navigateToDetails(name)}>
         <Image style={styles.imageStyle} source={{uri: uri}} />
         <Text style={styles.characterNameStyle}>{name}</Text>
       </TouchableOpacity>
