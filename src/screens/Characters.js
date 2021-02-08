@@ -30,6 +30,7 @@ class Characters extends Component {
           renderItem={({item}) => (
             <CharacterCoverComponent
               navigation={this.props.navigation}
+              name={item.name}
               uri={`${item?.thumbnail.path}/${standard.xlarge}.${item?.thumbnail.extension}`}
             />
           )}
@@ -44,6 +45,7 @@ class Characters extends Component {
           style={{flex: 1}}
           onEndReachedThreshold={1}
           initialNumToRender={1}
+          numColumns={3}
         />
       </View>
     );

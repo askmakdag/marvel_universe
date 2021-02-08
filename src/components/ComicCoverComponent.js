@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {DEVICE_WIDTH} from '../common/constants';
 
 class ComicCoverComponent extends Component {
   navigateToDetails = () => {
@@ -7,26 +8,34 @@ class ComicCoverComponent extends Component {
   };
 
   render() {
-    const {uri} = this.props;
+    const {uri, title} = this.props;
     return (
-      <TouchableOpacity onPress={this.navigateToDetails}>
-        <Image
-          style={styles.imageStyle}
-          source={{
-            uri: uri,
-          }}
-        />
+      <TouchableOpacity
+        style={styles.containerStyle}
+        onPress={this.navigateToDetails}>
+        <Image style={styles.imageStyle} source={{uri: uri}} />
+        <Text style={styles.comicTitleStyle}>{title}</Text>
       </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  imageStyle: {
-    height: 350,
-    width: 350,
-    backgroundColor: 'gray',
+  containerStyle: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: DEVICE_WIDTH * 0.3,
+    marginHorizontal: (DEVICE_WIDTH * 0.1) / 6,
     marginVertical: 2.5,
+  },
+  imageStyle: {
+    height: (DEVICE_WIDTH * 0.325 * 4) / 3,
+    width: DEVICE_WIDTH * 0.3,
+  },
+  comicTitleStyle: {
+    fontWeight: 'bold',
+    marginTop: 5,
+    height: 50,
   },
 });
 

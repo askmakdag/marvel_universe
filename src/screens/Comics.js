@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import ComicService from '../services/api/ComicService';
 import {get_comics} from '../store/Actions';
 import {connect} from 'react-redux';
-import {standard} from '../common/constants';
+import {portrait} from '../common/constants';
 import ComicCoverComponent from '../components/ComicCoverComponent';
 
 class Comics extends Component {
@@ -28,7 +28,8 @@ class Comics extends Component {
           renderItem={({item}) => (
             <ComicCoverComponent
               navigation={this.props.navigation}
-              uri={`${item?.thumbnail.path}/${standard.xlarge}.${item?.thumbnail.extension}`}
+              title={item.title}
+              uri={`${item?.thumbnail.path}/${portrait.uncanny}.${item?.thumbnail.extension}`}
             />
           )}
           ref={(ref) => {
@@ -42,6 +43,7 @@ class Comics extends Component {
           style={{flex: 1}}
           onEndReachedThreshold={1}
           initialNumToRender={1}
+          numColumns={3}
         />
       </View>
     );
