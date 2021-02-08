@@ -17,11 +17,11 @@ class TabStack extends Component {
 
             if (route.name === 'Comics') {
               type = focused ? 'solid' : 'light';
-              icon_color = focused ? 'red' : 'blue';
+              icon_color = focused ? 'red' : 'gray';
               icon_size = focused ? 24 : 23;
             } else if (route.name === 'Characters') {
               type = focused ? 'solid' : 'light';
-              icon_color = focused ? 'red' : 'blue';
+              icon_color = focused ? 'red' : 'gray';
               icon_size = focused ? 24 : 23;
             }
 
@@ -39,6 +39,9 @@ class TabStack extends Component {
         tabBarOptions={{
           inactiveTintColor: 'gray',
           showLabel: false,
+          style: {
+            backgroundColor: 'black',
+          },
         }}>
         <Tab.Screen name="Comics" component={ComicStackScreen} />
         <Tab.Screen name="Characters" component={CharacterStackScreen} />

@@ -5,6 +5,7 @@ import UserAgent from 'react-native-user-agent';
 import TabStack from './src/navigation/TabStack';
 import {NavigationContainer} from '@react-navigation/native';
 import configureStore from './src/store/ConfigureStore';
+import {StatusBar} from 'react-native';
 
 const store = configureStore();
 
@@ -66,6 +67,7 @@ function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
+        <StatusBar hidden={false} barStyle={'light-content'} />
         <TabStack />
       </NavigationContainer>
     </Provider>

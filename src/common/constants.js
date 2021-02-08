@@ -28,15 +28,15 @@ export const landscape = {
 export const headerScreenOptions = {
   headerBackTitleVisible: false,
   headerStyle: {
-    backgroundColor: 'brown',
+    backgroundColor: 'black',
     borderBottomColor: 'yellow',
     borderBottomWidth: 0,
     elevation: 1,
     shadowOpacity: 1,
   },
   headerTitleStyle: {
-    color: 'black',
+    color: 'white',
   },
   headerTitleAlign: 'center',
-  headerTintColor: 'gray',
+  headerTintColor: 'white',
 };
