@@ -15,7 +15,7 @@ class Characters extends Component {
     };
   }
 
-  componentWillMount = async () => {
+  UNSAFE_componentWillMount = async () => {
     const {data} = await CharacterService.getCharacters();
     this.props.get_characters(data.data.results);
   };

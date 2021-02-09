@@ -45,8 +45,8 @@ class TabStack extends Component {
           },
         })}
         tabBarOptions={tabBarOptions}>
-        <Tab.Screen name="COMICS" component={ComicStackScreen} />
         <Tab.Screen name="CHARACTERS" component={CharacterStackScreen} />
+        <Tab.Screen name="COMICS" component={ComicStackScreen} />
       </Tab.Navigator>
     );
   };

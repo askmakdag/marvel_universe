@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DEVICE_WIDTH} from '../common/constants';
+import _ from 'lodash';
 
 class CharacterCoverComponent extends Component {
   navigateToDetails = (title) => {
     this.props.navigation.push('CharacterDetails', {
-      header_title: title,
+      header_title: _.toUpper(title),
     });
   };
 
