@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, ScrollView} from 'react-native';
+import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
 import {DEVICE_WIDTH, portrait} from '../common/constants';
 
 class HorizontalScrollImages extends Component {
@@ -25,7 +25,7 @@ class HorizontalScrollImages extends Component {
           <Image
             style={styles.imageStyle}
             source={{
-              uri: `${image.path}/${portrait.uncanny}.${image.extension}`,
+              uri: `${image?.path}/${portrait.uncanny}.${image?.extension}`,
             }}
           />,
         );
@@ -35,24 +35,45 @@ class HorizontalScrollImages extends Component {
   };
 
   render() {
+    const {title} = this.props;
+    const {images} = this.state;
     return (
-      <ScrollView
-        horizontal={true}
-        pagingEnabled={false}
-        showsHorizontalScrollIndicator={false}>
-        {this.state.images}
-      </ScrollView>
+      <View
+        display={images === [] ? 'none' : 'flex'}
+        style={styles.containerStyle}>
+        <Text style={styles.titleStyle}>{title}</Text>
+        <ScrollView
+          horizontal={true}
+          pagingEnabled={false}
+          showsHorizontalScrollIndicator={false}>
+          {images}
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  containerStyle: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    marginVertical: 20,
+    borderTopWidth: 5,
+    borderBottomWidth: 5,
+    borderColor: 'orange',
+  },
   imageStyle: {
     height: (DEVICE_WIDTH * 0.4 * 3) / 2,
     width: DEVICE_WIDTH * 0.4,
     marginRight: 25,
-    marginVertical: 20,
     borderRadius: 10,
+    marginVertical: 7.5,
+  },
+  titleStyle: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginLeft: 5,
+    color: '#095096',
   },
 });
 

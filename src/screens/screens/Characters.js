@@ -1,31 +1,42 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, View, Platform} from 'react-native';
-import ComicService from '../services/api/ComicService';
-import {get_comics} from '../store/Actions';
+import {View, FlatList, Platform} from 'react-native';
+import CharacterService from '../../services/api/CharacterService';
+import {get_characters} from '../../store/Actions';
 import {connect} from 'react-redux';
-import ComicCoverComponent from '../components/ComicCoverComponent';
+import {standard} from '../../common/constants';
+import CharacterCoverComponent from '../../components/CharacterCoverComponent';
 import {SearchBar} from 'react-native-elements';
+import {styles} from '../styles/CharactersStyles';
 
-class Comics extends Component {
+class Characters extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comics: false,
+      characters: false,
       refreshing: false,
       search_input: '',
     };
   }
 
   UNSAFE_componentWillMount = async () => {
-    const {data} = await ComicService.getComics();
-    this.props.get_comics(data.data.results);
+    const {data} = await CharacterService.getCharacters();
+    this.props.get_characters(data.data.results);
   };
+
+  onChangeText(key, value) {
+    this.setState({
+      [key]: value,
+    });
+  }
+
+  handleRefresh = () => {};
 
   render() {
     return (
       <View style={styles.mainContainerStyle}>
         <SearchBar
           placeholder={'Search'}
+          onChangeText={(value) => this.onChangeText('search_input', value)}
           value={this.state.search_input}
           inputContainerStyle={styles.inputStyle}
           containerStyle={
@@ -42,11 +53,12 @@ class Comics extends Component {
         />
 
         <FlatList
-          data={this.props.comics}
+          data={this.props.characters}
           renderItem={({item}) => (
-            <ComicCoverComponent
+            <CharacterCoverComponent
               navigation={this.props.navigation}
-              comic={item}
+              name={item.name}
+              uri={`${item?.thumbnail.path}/${standard.xlarge}.${item?.thumbnail.extension}`}
             />
           )}
           ref={(ref) => {
@@ -60,50 +72,23 @@ class Comics extends Component {
           style={{flex: 1}}
           onEndReachedThreshold={1}
           initialNumToRender={1}
-          numColumns={2}
+          numColumns={3}
         />
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  mainContainerStyle: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputContainerStyleIos: {
-    backgroundColor: Platform.OS === 'ios' ? 'gray' : '#8f8f8f',
-    alignSelf: 'center',
-  },
-  inputContainerStyleAndroid: {
-    backgroundColor: Platform.OS === 'ios' ? 'gray' : '#8f8f8f',
-    alignSelf: 'center',
-    width: '96%',
-    borderRadius: 7.5,
-  },
-  inputStyle: {
-    height: 20,
-    backgroundColor: '#8f8f8f',
-  },
-  inputTextStyle: {
-    fontSize: 15,
-    height: 35,
-  },
-});
-
 const mapStateToProps = (state) => {
   return {
-    comics: state.comicReducer.comics,
+    characters: state.characterReducer.characters,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_comics: (comics) => dispatch(get_comics(comics)),
+    get_characters: (characters) => dispatch(get_characters(characters)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comics);
+export default connect(mapStateToProps, mapDispatchToProps)(Characters);

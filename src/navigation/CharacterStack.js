@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Characters from '../screens/Characters';
+import Characters from '../screens/screens/Characters';
 import {headerScreenOptions} from '../common/constants';
-import CharacterDetails from '../screens/CharacterDetails';
+import CharacterDetails from '../screens/screens/CharacterDetails';
 
 const CharacterStack = createStackNavigator();
 

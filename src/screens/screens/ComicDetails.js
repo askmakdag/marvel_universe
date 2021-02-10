@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, View, Text} from 'react-native';
-import {DEVICE_WIDTH, portrait} from '../common/constants';
+import {Image, View, Text} from 'react-native';
+import {portrait} from '../../common/constants';
 import _ from 'lodash';
-import ComicService from '../services/api/ComicService';
-import HorizontalScrollImages from '../components/HorizontalScrollImages';
+import ComicService from '../../services/api/ComicService';
+import HorizontalScrollImages from '../../components/HorizontalScrollImages';
+import {styles} from '../styles/ComicDetailsStyles';
 
 class ComicDetails extends Component {
   constructor(props) {
@@ -47,54 +48,20 @@ class ComicDetails extends Component {
         </View>
 
         <View style={styles.middleColumnStyle}>
-          <Text style={styles.comicTitleStyle}>SUMMARY</Text>
-          <Text style={styles.comicDescriptionStyle}>{comic.description}</Text>
-
-          <HorizontalScrollImages images={comic.images} />
+          <View display={comic.description ? 'flex' : 'none'}>
+            <Text style={styles.comicTitleStyle}>SUMMARY</Text>
+            <Text style={styles.comicDescriptionStyle}>
+              {comic.description}
+            </Text>
+          </View>
+          <HorizontalScrollImages
+            title={'COMIC COVER HISTORY'}
+            images={comic.images}
+          />
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  containerStyle: {
-    margin: '2%',
-  },
-  topRowStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  middleColumnStyle: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginTop: 10,
-  },
-  comicInfoTopRightStyle: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    width: DEVICE_WIDTH * 0.6,
-  },
-  imageStyle: {
-    height: (DEVICE_WIDTH * 0.35 * 3) / 2,
-    width: DEVICE_WIDTH * 0.35,
-  },
-  comicTitleStyle: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    marginHorizontal: 7.5,
-    paddingTop: 5,
-  },
-  comicInfoStyle: {
-    fontSize: 15,
-    marginHorizontal: 7.5,
-    paddingTop: 5,
-  },
-  comicDescriptionStyle: {
-    fontSize: 14,
-    fontWeight: '300',
-    paddingTop: 5,
-  },
-});
 
 export default ComicDetails;
