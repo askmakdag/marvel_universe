@@ -39,7 +39,7 @@ class HorizontalScrollImages extends Component {
     const {images} = this.state;
     return (
       <View
-        display={images === [] ? 'none' : 'flex'}
+        display={images.length === 0 ? 'none' : 'flex'}
         style={styles.containerStyle}>
         <Text style={styles.titleStyle}>{title}</Text>
         <ScrollView
