@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View, Platform} from 'react-native';
 import ComicService from '../services/api/ComicService';
 import {get_comics} from '../store/Actions';
 import {connect} from 'react-redux';
 import ComicCoverComponent from '../components/ComicCoverComponent';
+import {SearchBar} from 'react-native-elements';
 
 class Comics extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Comics extends Component {
     this.state = {
       comics: false,
       refreshing: false,
+      search_input: '',
     };
   }
 
@@ -22,6 +24,23 @@ class Comics extends Component {
   render() {
     return (
       <View style={styles.mainContainerStyle}>
+        <SearchBar
+          placeholder={'Search'}
+          value={this.state.search_input}
+          inputContainerStyle={styles.inputStyle}
+          containerStyle={
+            Platform.OS === 'android'
+              ? styles.inputContainerStyleAndroid
+              : styles.inputContainerStyleIos
+          }
+          inputStyle={styles.inputTextStyle}
+          platform={Platform.OS}
+          placeholderTextColor={styles.placeholderTextColor}
+          onCancel={() => this.setState({search_input: ''})}
+          autoFocus={false}
+          cancelButtonTitle={'cancel'}
+        />
+
         <FlatList
           data={this.props.comics}
           renderItem={({item}) => (
@@ -54,6 +73,24 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  inputContainerStyleIos: {
+    backgroundColor: Platform.OS === 'ios' ? 'gray' : '#8f8f8f',
+    alignSelf: 'center',
+  },
+  inputContainerStyleAndroid: {
+    backgroundColor: Platform.OS === 'ios' ? 'gray' : '#8f8f8f',
+    alignSelf: 'center',
+    width: '96%',
+    borderRadius: 7.5,
+  },
+  inputStyle: {
+    height: 20,
+    backgroundColor: '#8f8f8f',
+  },
+  inputTextStyle: {
+    fontSize: 15,
+    height: 35,
   },
 });
 
