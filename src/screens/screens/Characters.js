@@ -4,7 +4,7 @@ import CharacterService from '../../services/api/CharacterService';
 import {get_characters} from '../../store/Actions';
 import {connect} from 'react-redux';
 import {standard} from '../../common/constants';
-import CharacterCoverComponent from '../../components/CharacterCoverComponent';
+import CharacterCoverComponent from '../../components/components/CharacterCoverComponent';
 import {SearchBar} from 'react-native-elements';
 import {styles} from '../styles/CharactersStyles';
 
@@ -57,8 +57,8 @@ class Characters extends Component {
           renderItem={({item}) => (
             <CharacterCoverComponent
               navigation={this.props.navigation}
+              character={item}
               name={item.name}
-              uri={`${item?.thumbnail.path}/${standard.xlarge}.${item?.thumbnail.extension}`}
             />
           )}
           ref={(ref) => {
@@ -72,7 +72,7 @@ class Characters extends Component {
           style={{flex: 1}}
           onEndReachedThreshold={1}
           initialNumToRender={1}
-          numColumns={3}
+          numColumns={2}
         />
       </View>
     );

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
-import {DEVICE_WIDTH, portrait} from '../common/constants';
+import {DEVICE_WIDTH, portrait} from '../../common/constants';
 
 class HorizontalScrollImages extends Component {
   constructor(props) {

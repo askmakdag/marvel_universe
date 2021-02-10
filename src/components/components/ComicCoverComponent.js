@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, TouchableOpacity, Text, View} from 'react-native';
-import {DEVICE_WIDTH, portrait} from '../common/constants';
+import {Image, TouchableOpacity, Text, View} from 'react-native';
+import {portrait} from '../../common/constants';
 import _ from 'lodash';
+import {styles} from '../styles/ComicCoverComponentStyles';
 
 class ComicCoverComponent extends Component {
   navigateToDetails = (comic) => {
@@ -31,34 +32,5 @@ class ComicCoverComponent extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  containerStyle: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: DEVICE_WIDTH * 0.45,
-    marginHorizontal: (DEVICE_WIDTH * 0.1) / 6,
-    marginVertical: 5,
-    backgroundColor: 'black',
-  },
-  imageStyle: {
-    height: (DEVICE_WIDTH * 0.45 * 3) / 2,
-    width: DEVICE_WIDTH * 0.45,
-  },
-  comicTitleStyle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: 'white',
-    height: 50,
-    marginHorizontal: 7.5,
-    paddingTop: 5,
-  },
-  coverInfoStyle: {
-    backgroundColor: 'orange',
-    fontSize: 13,
-    fontWeight: 'bold',
-    padding: 5,
-  },
-});
 
 export default ComicCoverComponent;

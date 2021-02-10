@@ -3,7 +3,7 @@ import {Image, View, Text} from 'react-native';
 import {portrait} from '../../common/constants';
 import _ from 'lodash';
 import ComicService from '../../services/api/ComicService';
-import HorizontalScrollImages from '../../components/HorizontalScrollImages';
+import HorizontalScrollImages from '../../components/components/HorizontalScrollImages';
 import {styles} from '../styles/ComicDetailsStyles';
 
 class ComicDetails extends Component {

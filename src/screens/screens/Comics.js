@@ -3,7 +3,7 @@ import {FlatList, View, Platform} from 'react-native';
 import ComicService from '../../services/api/ComicService';
 import {get_comics} from '../../store/Actions';
 import {connect} from 'react-redux';
-import ComicCoverComponent from '../../components/ComicCoverComponent';
+import ComicCoverComponent from '../../components/components/ComicCoverComponent';
 import {SearchBar} from 'react-native-elements';
 import {styles} from '../styles/ComicsStyles';
 
