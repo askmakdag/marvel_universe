@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import ComicCoverComponent from '../../components/components/ComicCoverComponent';
 import {SearchBar} from 'react-native-elements';
 import {styles} from '../styles/ComicsStyles';
+import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 
 class Comics extends Component {
   constructor(props) {
@@ -14,12 +15,15 @@ class Comics extends Component {
       comics: false,
       refreshing: false,
       search_input: '',
+      page_loading: false,
     };
   }
 
   UNSAFE_componentWillMount = async () => {
+    await this.setState({page_loading: true});
     const {data} = await ComicService.getComics();
-    this.props.get_comics(data.data.results);
+    await this.props.get_comics(data.data.results);
+    await this.setState({page_loading: false});
   };
 
   onChangeText(key, value) {
@@ -49,27 +53,31 @@ class Comics extends Component {
           cancelButtonTitle={'cancel'}
         />
 
-        <FlatList
-          data={this.props.comics}
-          renderItem={({item}) => (
-            <ComicCoverComponent
-              navigation={this.props.navigation}
-              comic={item}
-            />
-          )}
-          ref={(ref) => {
-            this.flatListRef = ref;
-          }}
-          keyExtractor={(item) => item.id}
-          refreshing={this.state.refreshing}
-          onRefresh={this.handleRefresh}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{flexGrow: 1}}
-          style={{flex: 1}}
-          onEndReachedThreshold={1}
-          initialNumToRender={1}
-          numColumns={2}
-        />
+        {this.state.page_loading ? (
+          <AnimatedLoadingComponent />
+        ) : (
+          <FlatList
+            data={this.props.comics}
+            renderItem={({item}) => (
+              <ComicCoverComponent
+                navigation={this.props.navigation}
+                comic={item}
+              />
+            )}
+            ref={(ref) => {
+              this.flatListRef = ref;
+            }}
+            keyExtractor={(item) => item.id}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{flexGrow: 1}}
+            style={{flex: 1}}
+            onEndReachedThreshold={1}
+            initialNumToRender={1}
+            numColumns={2}
+          />
+        )}
       </View>
     );
   }

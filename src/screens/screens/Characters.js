@@ -3,10 +3,10 @@ import {View, FlatList, Platform} from 'react-native';
 import CharacterService from '../../services/api/CharacterService';
 import {get_characters} from '../../store/Actions';
 import {connect} from 'react-redux';
-import {standard} from '../../common/constants';
 import CharacterCoverComponent from '../../components/components/CharacterCoverComponent';
 import {SearchBar} from 'react-native-elements';
 import {styles} from '../styles/CharactersStyles';
+import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 
 class Characters extends Component {
   constructor(props) {
@@ -15,12 +15,15 @@ class Characters extends Component {
       characters: false,
       refreshing: false,
       search_input: '',
+      page_loading: false,
     };
   }
 
   UNSAFE_componentWillMount = async () => {
+    await this.setState({page_loading: true});
     const {data} = await CharacterService.getCharacters();
     this.props.get_characters(data.data.results);
+    await this.setState({page_loading: false});
   };
 
   onChangeText(key, value) {
@@ -52,28 +55,32 @@ class Characters extends Component {
           cancelButtonTitle={'cancel'}
         />
 
-        <FlatList
-          data={this.props.characters}
-          renderItem={({item}) => (
-            <CharacterCoverComponent
-              navigation={this.props.navigation}
-              character={item}
-              name={item.name}
-            />
-          )}
-          ref={(ref) => {
-            this.flatListRef = ref;
-          }}
-          keyExtractor={(item) => item.id}
-          refreshing={this.state.refreshing}
-          onRefresh={this.handleRefresh}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{flexGrow: 1}}
-          style={{flex: 1}}
-          onEndReachedThreshold={1}
-          initialNumToRender={1}
-          numColumns={2}
-        />
+        {this.state.page_loading ? (
+          <AnimatedLoadingComponent />
+        ) : (
+          <FlatList
+            data={this.props.characters}
+            renderItem={({item}) => (
+              <CharacterCoverComponent
+                navigation={this.props.navigation}
+                character={item}
+                name={item.name}
+              />
+            )}
+            ref={(ref) => {
+              this.flatListRef = ref;
+            }}
+            keyExtractor={(item) => item.id}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{flexGrow: 1}}
+            style={{flex: 1}}
+            onEndReachedThreshold={1}
+            initialNumToRender={1}
+            numColumns={2}
+          />
+        )}
       </View>
     );
   }
