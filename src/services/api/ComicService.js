@@ -3,8 +3,10 @@ import {Config} from 'react-native-config';
 import {axiosQueryParams} from '../../helpers/AxiosHelper';
 
 class ComicService {
-  getComics = async () => {
-    return axios.get(`${Config.API_URL}/v1/public/comics?${axiosQueryParams}`);
+  getComics = async ({offset, limit}) => {
+    return axios.get(
+      `${Config.API_URL}/v1/public/comics?${axiosQueryParams}&offset=${offset}&limit=${limit}`,
+    );
   };
 
   getComic = async ({comicId}) => {

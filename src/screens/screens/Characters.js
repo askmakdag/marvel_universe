@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, FlatList, Platform} from 'react-native';
 import CharacterService from '../../services/api/CharacterService';
-import {get_characters} from '../../store/Actions';
+import {get_characters, add_characters} from '../../store/Actions';
 import {connect} from 'react-redux';
 import CharacterCoverComponent from '../../components/components/CharacterCoverComponent';
 import {SearchBar} from 'react-native-elements';
@@ -16,14 +16,17 @@ class Characters extends Component {
       search_input: '',
       page_loading: false,
       filtered_characters: [],
+      page: 0,
+      limit: 20,
     };
   }
 
   UNSAFE_componentWillMount = async () => {
+    const {page, limit} = this.state;
     await this.setState({page_loading: true});
-    const {data} = await CharacterService.getCharacters();
+    const {data} = await CharacterService.getCharacters({offset: page, limit});
     this.props.get_characters(data.data.results);
-    await this.setState({page_loading: false});
+    await this.setState({page_loading: false, page: page + 1});
   };
 
   onChangeText = async (key, value) => {
@@ -41,7 +44,24 @@ class Characters extends Component {
     this.setState({filtered_characters: filtered_characters});
   };
 
-  handleRefresh = () => {};
+  handleLoadMore = async () => {
+    const {page, limit, search_input} = this.state;
+    if (search_input === '') {
+      const {data} = await CharacterService.getCharacters({
+        offset: page * limit,
+        limit,
+      });
+      this.setState({page: page + 1});
+      await this.props.add_characters(data.data.results);
+    }
+  };
+
+  handleRefresh = async () => {
+    const {limit} = this.state;
+    const {data} = await CharacterService.getCharacters({offset: 0, limit});
+    this.props.get_characters(data.data.results);
+    await this.setState({page: 1});
+  };
 
   render() {
     const {filtered_characters, search_input} = this.state;
@@ -85,6 +105,7 @@ class Characters extends Component {
             keyExtractor={(item) => item.id}
             refreshing={this.state.refreshing}
             onRefresh={this.handleRefresh}
+            onEndReached={this.handleLoadMore}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{flexGrow: 1}}
             style={{flex: 1}}
@@ -107,6 +128,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     get_characters: (characters) => dispatch(get_characters(characters)),
+    add_characters: (characters) => dispatch(add_characters(characters)),
   };
 };
 
