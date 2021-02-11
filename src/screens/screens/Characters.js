@@ -12,10 +12,10 @@ class Characters extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      characters: false,
       refreshing: false,
       search_input: '',
       page_loading: false,
+      filtered_characters: [],
     };
   }
 
@@ -26,21 +26,33 @@ class Characters extends Component {
     await this.setState({page_loading: false});
   };
 
-  onChangeText(key, value) {
+  onChangeText = async (key, value) => {
     this.setState({
       [key]: value,
     });
-  }
+    await this.DoCharacterSearch(value);
+  };
+
+  DoCharacterSearch = async (search_input) => {
+    const {characters} = this.props;
+    const filtered_characters = characters.filter((character) => {
+      return character.name.includes(search_input);
+    });
+    this.setState({filtered_characters: filtered_characters});
+  };
 
   handleRefresh = () => {};
 
   render() {
+    const {filtered_characters, search_input} = this.state;
+    const {characters} = this.props;
+
     return (
       <View style={styles.mainContainerStyle}>
         <SearchBar
           placeholder={'Search'}
           onChangeText={(value) => this.onChangeText('search_input', value)}
-          value={this.state.search_input}
+          value={search_input}
           inputContainerStyle={styles.inputStyle}
           containerStyle={
             Platform.OS === 'android'
@@ -59,7 +71,7 @@ class Characters extends Component {
           <AnimatedLoadingComponent />
         ) : (
           <FlatList
-            data={this.props.characters}
+            data={search_input === '' ? characters : filtered_characters}
             renderItem={({item}) => (
               <CharacterCoverComponent
                 navigation={this.props.navigation}

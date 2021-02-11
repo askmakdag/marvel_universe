@@ -12,10 +12,10 @@ class Comics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comics: false,
       refreshing: false,
       search_input: '',
       page_loading: false,
+      filtered_comics: [],
     };
   }
 
@@ -26,19 +26,30 @@ class Comics extends Component {
     await this.setState({page_loading: false});
   };
 
-  onChangeText(key, value) {
+  DoComicSearch = async (search_input) => {
+    const {comics} = this.props;
+    const filtered_comics = comics.filter((comic) => {
+      return comic.title.includes(search_input);
+    });
+    this.setState({filtered_comics: filtered_comics});
+  };
+
+  onChangeText = async (key, value) => {
     this.setState({
       [key]: value,
     });
-  }
+    await this.DoComicSearch(value);
+  };
 
   render() {
+    const {search_input, filtered_comics} = this.state;
+    const {comics} = this.props;
     return (
       <View style={styles.mainContainerStyle}>
         <SearchBar
           placeholder={'Search'}
           onChangeText={(value) => this.onChangeText('search_input', value)}
-          value={this.state.search_input}
+          value={search_input}
           inputContainerStyle={styles.inputStyle}
           containerStyle={
             Platform.OS === 'android'
@@ -57,7 +68,7 @@ class Comics extends Component {
           <AnimatedLoadingComponent />
         ) : (
           <FlatList
-            data={this.props.comics}
+            data={search_input === '' ? comics : filtered_comics}
             renderItem={({item}) => (
               <ComicCoverComponent
                 navigation={this.props.navigation}

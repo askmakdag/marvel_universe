@@ -12,10 +12,12 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   inputContainerStyleAndroid: {
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#cacaca',
     alignSelf: 'center',
     width: '96%',
     borderRadius: 7.5,
+    marginTop: 10,
+    marginBottom: 5,
   },
   inputStyle: {
     height: 20,
