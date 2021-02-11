@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
-import {Image, View, Text} from 'react-native';
+import {Image, View, Text, ScrollView} from 'react-native';
 import {portrait} from '../../common/constants';
 import _ from 'lodash';
 import ComicService from '../../services/api/ComicService';
 import HorizontalScrollImages from '../../components/components/HorizontalScrollImages';
 import {styles} from '../styles/ComicDetailsStyles';
+import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 
 class ComicDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       comic: {},
+      page_loading: false,
     };
   }
 
@@ -20,8 +22,10 @@ class ComicDetails extends Component {
       headerTitle: _.toUpper(comic.title),
     });
 
+    await this.setState({page_loading: true});
     const {data} = await this.GetComicDetail({comicId: comic.id});
-    this.setState({comic: data.data.results[0]});
+    await this.setState({comic: data.data.results[0]});
+    await this.setState({page_loading: false});
   };
 
   GetComicDetail = async (id) => {
@@ -30,8 +34,10 @@ class ComicDetails extends Component {
 
   render() {
     const {comic} = this.state;
-    return (
-      <View style={styles.containerStyle}>
+    return this.state.page_loading ? (
+      <AnimatedLoadingComponent />
+    ) : (
+      <ScrollView style={styles.containerStyle}>
         <View style={styles.topRowStyle}>
           <Image
             style={styles.imageStyle}
@@ -59,7 +65,7 @@ class ComicDetails extends Component {
             images={comic.images}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

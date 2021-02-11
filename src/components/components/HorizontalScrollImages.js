@@ -10,6 +10,10 @@ class HorizontalScrollImages extends Component {
     };
   }
 
+  UNSAFE_componentWillMount = async () => {
+    await this.fillScrollView(this.props.images);
+  };
+
   shouldComponentUpdate = async (nextProps, nextState) => {
     if (this.props.images !== nextProps.images) {
       await this.fillScrollView(nextProps.images);
@@ -20,9 +24,10 @@ class HorizontalScrollImages extends Component {
     let scroll_images = [];
 
     if (images) {
-      await images.forEach((image) => {
+      await images.forEach((image, index) => {
         scroll_images.push(
           <Image
+            key={index}
             style={styles.imageStyle}
             source={{
               uri: `${image?.path}/${portrait.uncanny}.${image?.extension}`,
@@ -58,8 +63,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     marginVertical: 20,
-    borderTopWidth: 5,
-    borderBottomWidth: 5,
+    borderTopWidth: 3,
+    borderBottomWidth: 3,
     borderColor: 'orange',
   },
   imageStyle: {
@@ -73,7 +78,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
     marginLeft: 5,
-    color: '#095096',
+    color: '#10589f',
   },
 });
 

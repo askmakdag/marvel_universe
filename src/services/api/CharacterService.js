@@ -3,9 +3,9 @@ import {Config} from 'react-native-config';
 import {axiosQueryParams} from '../../helpers/AxiosHelper';
 
 class CharacterService {
-  getCharacters = async () => {
+  getCharacters = async ({offset, limit}) => {
     return axios.get(
-      `${Config.API_URL}/v1/public/characters?${axiosQueryParams}`,
+      `${Config.API_URL}/v1/public/characters?${axiosQueryParams}&offset=${offset}&limit=${limit}`,
     );
   };
 
