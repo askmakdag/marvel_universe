@@ -3,6 +3,7 @@ import {Image, TouchableOpacity, Text, View} from 'react-native';
 import {portrait} from '../../common/constants';
 import _ from 'lodash';
 import {styles} from '../styles/ComicCoverComponentStyles';
+import InfoTextComponent from './InfoTextComponent';
 
 class ComicCoverComponent extends Component {
   navigateToDetails = (comic) => {
@@ -24,9 +25,17 @@ class ComicCoverComponent extends Component {
           }}
         />
         <Text style={styles.comicTitleStyle}>{_.toUpper(comic?.title)}</Text>
-        <View style={styles.coverInfoStyle}>
-          <Text>{'Page Count: ' + comic?.pageCount}</Text>
-          <Text>{'Creator: ' + comic?.creators?.items[0]?.name}</Text>
+        <View>
+          <InfoTextComponent
+            label={'Creator'}
+            text={comic?.creators?.items[0]?.name}
+          />
+          <InfoTextComponent label={'Page Count'} text={comic?.pageCount} />
+          <InfoTextComponent
+            label={'Stories'}
+            text={comic?.stories?.available}
+          />
+          <InfoTextComponent label={'Events'} text={comic?.events?.available} />
         </View>
       </TouchableOpacity>
     );

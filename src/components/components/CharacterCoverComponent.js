@@ -3,6 +3,7 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {standard} from '../../common/constants';
 import _ from 'lodash';
 import {styles} from '../styles/CharacterCoverComponentStyles';
+import InfoTextComponent from './InfoTextComponent';
 
 class CharacterCoverComponent extends Component {
   navigateToDetails = (title) => {
@@ -24,8 +25,26 @@ class CharacterCoverComponent extends Component {
           }}
         />
         <Text style={styles.characterNameStyle}>{character.name}</Text>
-        <View style={styles.coverInfoStyle}>
-          <Text> </Text>
+        <View>
+          <InfoTextComponent
+            label={'Stories'}
+            text={character?.stories?.available}
+          />
+
+          <InfoTextComponent
+            label={'Series'}
+            text={character?.series?.available}
+          />
+
+          <InfoTextComponent
+            label={'Comics'}
+            text={character?.comics?.available}
+          />
+
+          <InfoTextComponent
+            label={'Events'}
+            text={character?.events?.available}
+          />
         </View>
       </TouchableOpacity>
     );
