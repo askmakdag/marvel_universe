@@ -46,4 +46,8 @@ export const styles = StyleSheet.create({
     paddingTop: 5,
     paddingHorizontal: 5,
   },
+  textStyle: {
+    fontSize: 13,
+    padding: 5,
+  },
 });

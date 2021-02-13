@@ -7,7 +7,7 @@ import HorizontalScrollImages from '../../components/components/HorizontalScroll
 import {styles} from '../styles/ComicDetailsStyles';
 import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 import CacheImageComponent from '../../components/components/CacheImageComponent';
-import CharacterListComponent from '../../components/components/CharacterListComponent';
+import CharacterListComponent from '../../components/components/listComponents/CharacterListComponent';
 
 class ComicDetails extends Component {
   constructor(props) {

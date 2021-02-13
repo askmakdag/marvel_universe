@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {FlatList, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import CacheImageComponent from './CacheImageComponent';
-import {DEVICE_WIDTH, portrait} from '../../common/constants';
-import ComicService from '../../services/api/ComicService';
+import CacheImageComponent from '../CacheImageComponent';
+import {DEVICE_WIDTH, portrait} from '../../../common/constants';
+import ComicService from '../../../services/api/ComicService';
 
 class CharacterListComponent extends Component {
   constructor(props) {

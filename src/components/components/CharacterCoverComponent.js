@@ -27,21 +27,19 @@ class CharacterCoverComponent extends Component {
           <InfoTextComponent
             label={'Stories Count:  '}
             text={character?.stories?.available}
+            textStyle={styles.textStyle}
           />
 
           <InfoTextComponent
             label={'Series Count:   '}
             text={character?.series?.available}
+            textStyle={styles.textStyle}
           />
 
           <InfoTextComponent
             label={'Comics Count: '}
             text={character?.comics?.available}
-          />
-
-          <InfoTextComponent
-            label={'Events Count:  '}
-            text={character?.events?.available}
+            textStyle={styles.textStyle}
           />
         </View>
       </TouchableOpacity>

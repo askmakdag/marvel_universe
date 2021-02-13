@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {ScrollView, View, Text, TouchableOpacity, Linking} from 'react-native';
 import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 import _ from 'lodash';
-import ComicListComponent from '../../components/components/ComicListComponent';
+import ComicListComponent from '../../components/components/listComponents/ComicListComponent';
 import CharacterService from '../../services/api/CharacterService';
 import {styles} from '../styles/CharacterDetailsStyles';
 import CacheImageComponent from '../../components/components/CacheImageComponent';
 import {portrait} from '../../common/constants';
+import InfoTextComponent from '../../components/components/InfoTextComponent';
 
 class CharacterDetails extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class CharacterDetails extends Component {
     await this.getDetailPageUrl(character);
     await this.setState({page_loading: true});
     const {data} = await this.GetCharacterDetail(character.id);
+    console.log('character data: ', data);
     await this.setState({character: data.data.results[0]});
     await this.setState({page_loading: false});
   };
@@ -62,7 +64,30 @@ class CharacterDetails extends Component {
             style={styles.imageStyle}
           />
           <View style={styles.characterInfoTopRightStyle}>
-            <Text style={styles.characterTitleStyle}>{character.name}</Text>
+            <InfoTextComponent
+              label={'Stories Count:  '}
+              text={character?.stories?.available}
+              textStyle={styles.textStyle}
+            />
+
+            <InfoTextComponent
+              label={'Series Count:   '}
+              text={character?.series?.available}
+              textStyle={styles.textStyle}
+            />
+
+            <InfoTextComponent
+              label={'Comics Count: '}
+              text={character?.comics?.available}
+              textStyle={styles.textStyle}
+            />
+
+            <InfoTextComponent
+              label={'Events Count:  '}
+              text={character?.events?.available}
+              textStyle={styles.textStyle}
+            />
+
             <TouchableOpacity onPress={this.OpenDetailPage}>
               <Text style={styles.linkTextStyle}>
                 Navigate To Character Detail Page

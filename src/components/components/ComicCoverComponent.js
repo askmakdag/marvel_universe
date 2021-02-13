@@ -29,16 +29,22 @@ class ComicCoverComponent extends Component {
           <InfoTextComponent
             label={'Creator: '}
             text={comic?.creators?.items[0]?.name}
-            textStyle={{fontWeight: 'bold'}}
+            textStyle={styles.creatorTextStyle}
           />
-          <InfoTextComponent label={'Page Count: '} text={comic?.pageCount} />
+          <InfoTextComponent
+            label={'Page Count: '}
+            text={comic?.pageCount}
+            textStyle={styles.textStyle}
+          />
           <InfoTextComponent
             label={'Stories Count: '}
             text={comic?.stories?.available}
+            textStyle={styles.textStyle}
           />
           <InfoTextComponent
             label={'Events Count: '}
             text={comic?.events?.available}
+            textStyle={styles.textStyle}
           />
         </View>
       </TouchableOpacity>

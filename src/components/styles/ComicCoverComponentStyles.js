@@ -23,4 +23,15 @@ export const styles = StyleSheet.create({
     marginHorizontal: 7.5,
     paddingTop: 5,
   },
+  textStyle: {
+    backgroundColor: 'orange',
+    fontSize: 13,
+    padding: 5,
+  },
+  creatorTextStyle: {
+    backgroundColor: 'orange',
+    fontSize: 13,
+    padding: 5,
+    fontWeight: 'bold',
+  },
 });
