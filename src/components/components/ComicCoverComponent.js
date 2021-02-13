@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Image, TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import {portrait} from '../../common/constants';
 import _ from 'lodash';
 import {styles} from '../styles/ComicCoverComponentStyles';
 import InfoTextComponent from './InfoTextComponent';
+import CacheImageComponent from './CacheImageComponent';
 
 class ComicCoverComponent extends Component {
   navigateToDetails = (comic) => {
@@ -18,11 +19,9 @@ class ComicCoverComponent extends Component {
       <TouchableOpacity
         style={styles.containerStyle}
         onPress={() => this.navigateToDetails(comic)}>
-        <Image
+        <CacheImageComponent
+          uri={`${comic?.thumbnail.path}/${portrait.uncanny}.${comic?.thumbnail.extension}`}
           style={styles.imageStyle}
-          source={{
-            uri: `${comic?.thumbnail.path}/${portrait.uncanny}.${comic?.thumbnail.extension}`,
-          }}
         />
         <Text style={styles.comicTitleStyle}>{_.toUpper(comic?.title)}</Text>
         <View>

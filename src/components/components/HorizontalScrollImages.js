@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import {DEVICE_WIDTH, portrait} from '../../common/constants';
+import CacheImageComponent from './CacheImageComponent';
 
 class HorizontalScrollImages extends Component {
   constructor(props) {
@@ -26,12 +27,10 @@ class HorizontalScrollImages extends Component {
     if (images) {
       await images.forEach((image, index) => {
         scroll_images.push(
-          <Image
+          <CacheImageComponent
             key={index}
+            uri={`${image?.path}/${portrait.uncanny}.${image?.extension}`}
             style={styles.imageStyle}
-            source={{
-              uri: `${image?.path}/${portrait.uncanny}.${image?.extension}`,
-            }}
           />,
         );
       });

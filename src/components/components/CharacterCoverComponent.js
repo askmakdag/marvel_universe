@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {standard} from '../../common/constants';
 import _ from 'lodash';
 import {styles} from '../styles/CharacterCoverComponentStyles';
 import InfoTextComponent from './InfoTextComponent';
+import CacheImageComponent from './CacheImageComponent';
 
 class CharacterCoverComponent extends Component {
   navigateToDetails = (title) => {
@@ -18,11 +19,9 @@ class CharacterCoverComponent extends Component {
       <TouchableOpacity
         style={styles.containerStyle}
         onPress={() => this.navigateToDetails(character.name)}>
-        <Image
+        <CacheImageComponent
+          uri={`${character?.thumbnail.path}/${standard.xlarge}.${character?.thumbnail.extension}`}
           style={styles.imageStyle}
-          source={{
-            uri: `${character?.thumbnail.path}/${standard.xlarge}.${character?.thumbnail.extension}`,
-          }}
         />
         <Text style={styles.characterNameStyle}>{character.name}</Text>
         <View>
