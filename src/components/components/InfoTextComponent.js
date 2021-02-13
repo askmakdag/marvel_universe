@@ -3,10 +3,13 @@ import {View, Text, StyleSheet} from 'react-native';
 
 class InfoTextComponent extends Component {
   render() {
-    const {label, text} = this.props;
+    const {label, text, textStyle = {}} = this.props;
     return (
       <View display={text ? 'flex' : 'none'}>
-        <Text style={styles.textStyle}>{label + ' ' + text}</Text>
+        <Text style={styles.textStyle}>
+          {label + ' '}
+          <Text style={[styles.textStyle, textStyle]}>{text}</Text>
+        </Text>
       </View>
     );
   }
@@ -17,7 +20,6 @@ const styles = StyleSheet.create({
   textStyle: {
     backgroundColor: 'orange',
     fontSize: 13,
-    // fontWeight: 'bold',
     padding: 5,
   },
 });

@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import {Image, View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Linking} from 'react-native';
 import {portrait} from '../../common/constants';
 import _ from 'lodash';
 import ComicService from '../../services/api/ComicService';
 import HorizontalScrollImages from '../../components/components/HorizontalScrollImages';
 import {styles} from '../styles/ComicDetailsStyles';
 import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
+import CacheImageComponent from '../../components/components/CacheImageComponent';
+import CharacterListComponent from '../../components/components/CharacterListComponent';
 
 class ComicDetails extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class ComicDetails extends Component {
     this.state = {
       comic: {},
       page_loading: false,
+      comic_detail_page_url: '',
     };
   }
 
@@ -21,35 +24,54 @@ class ComicDetails extends Component {
     this.props.navigation.setOptions({
       headerTitle: _.toUpper(comic.title),
     });
-
+    await this.getDetailPageUrl(comic);
     await this.setState({page_loading: true});
     const {data} = await this.GetComicDetail({comicId: comic.id});
     await this.setState({comic: data.data.results[0]});
     await this.setState({page_loading: false});
   };
 
+  getDetailPageUrl = async (comic) => {
+    const comic_url = await comic.urls.filter((url) => {
+      return url.type === 'detail';
+    });
+
+    await this.setState({comic_detail_page_url: comic_url[0].url});
+  };
+
   GetComicDetail = async (id) => {
     return await ComicService.getComic(id);
   };
 
+  OpenDetailPage = () => {
+    const {comic_detail_page_url} = this.state;
+    if (comic_detail_page_url) {
+      Linking.openURL(comic_detail_page_url);
+    }
+  };
+
   render() {
     const {comic} = this.state;
+    console.log('comic detail: ', comic);
     return this.state.page_loading ? (
       <AnimatedLoadingComponent />
     ) : (
       <ScrollView style={styles.containerStyle}>
         <View style={styles.topRowStyle}>
-          <Image
+          <CacheImageComponent
+            uri={`${comic?.thumbnail?.path}/${portrait.uncanny}.${comic?.thumbnail?.extension}`}
             style={styles.imageStyle}
-            source={{
-              uri: `${comic?.thumbnail?.path}/${portrait.uncanny}.${comic?.thumbnail?.extension}`,
-            }}
           />
           <View style={styles.comicInfoTopRightStyle}>
             <Text style={styles.comicTitleStyle}>{comic.title}</Text>
             <Text style={styles.comicInfoStyle}>
               {'Pages: ' + comic.pageCount}
             </Text>
+            <TouchableOpacity onPress={this.OpenDetailPage}>
+              <Text style={styles.linkTextStyle}>
+                Navigate To Comic Detail Page
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -65,6 +87,11 @@ class ComicDetails extends Component {
             images={comic.images}
           />
         </View>
+
+        <CharacterListComponent
+          comicId={comic?.id}
+          navigation={this.props.navigation}
+        />
       </ScrollView>
     );
   }

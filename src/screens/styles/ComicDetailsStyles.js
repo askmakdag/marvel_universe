@@ -34,9 +34,16 @@ export const styles = StyleSheet.create({
     marginHorizontal: 7.5,
     paddingTop: 5,
   },
+  linkTextStyle: {
+    fontSize: 15,
+    marginHorizontal: 7.5,
+    paddingTop: 5,
+    color: 'blue',
+  },
   comicDescriptionStyle: {
     fontSize: 14,
     fontWeight: '300',
     paddingTop: 5,
+    paddingHorizontal: 5,
   },
 });

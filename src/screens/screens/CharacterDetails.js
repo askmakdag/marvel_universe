@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
+import _ from 'lodash';
 
 class CharacterDetails extends Component {
   constructor(props) {
@@ -11,9 +12,9 @@ class CharacterDetails extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const {header_title} = this.props.route.params;
+    const {character} = this.props.route.params;
     this.props.navigation.setOptions({
-      headerTitle: header_title,
+      headerTitle: _.toUpper(character.name),
     });
   }
 

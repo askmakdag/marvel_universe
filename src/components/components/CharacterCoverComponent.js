@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {standard} from '../../common/constants';
-import _ from 'lodash';
 import {styles} from '../styles/CharacterCoverComponentStyles';
 import InfoTextComponent from './InfoTextComponent';
 import CacheImageComponent from './CacheImageComponent';
 
 class CharacterCoverComponent extends Component {
-  navigateToDetails = (title) => {
+  navigateToDetails = (character) => {
     this.props.navigation.push('CharacterDetails', {
-      header_title: _.toUpper(title),
+      character: character,
     });
   };
 
@@ -18,7 +17,7 @@ class CharacterCoverComponent extends Component {
     return (
       <TouchableOpacity
         style={styles.containerStyle}
-        onPress={() => this.navigateToDetails(character.name)}>
+        onPress={() => this.navigateToDetails(character)}>
         <CacheImageComponent
           uri={`${character?.thumbnail.path}/${standard.xlarge}.${character?.thumbnail.extension}`}
           style={styles.imageStyle}
@@ -26,22 +25,22 @@ class CharacterCoverComponent extends Component {
         <Text style={styles.characterNameStyle}>{character.name}</Text>
         <View>
           <InfoTextComponent
-            label={'Stories'}
+            label={'Stories Count:  '}
             text={character?.stories?.available}
           />
 
           <InfoTextComponent
-            label={'Series'}
+            label={'Series Count:   '}
             text={character?.series?.available}
           />
 
           <InfoTextComponent
-            label={'Comics'}
+            label={'Comics Count: '}
             text={character?.comics?.available}
           />
 
           <InfoTextComponent
-            label={'Events'}
+            label={'Events Count:  '}
             text={character?.events?.available}
           />
         </View>

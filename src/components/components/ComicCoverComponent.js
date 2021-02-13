@@ -15,6 +15,7 @@ class ComicCoverComponent extends Component {
 
   render() {
     const {comic} = this.props;
+
     return (
       <TouchableOpacity
         style={styles.containerStyle}
@@ -26,15 +27,19 @@ class ComicCoverComponent extends Component {
         <Text style={styles.comicTitleStyle}>{_.toUpper(comic?.title)}</Text>
         <View>
           <InfoTextComponent
-            label={'Creator'}
+            label={'Creator: '}
             text={comic?.creators?.items[0]?.name}
+            textStyle={{fontWeight: 'bold'}}
           />
-          <InfoTextComponent label={'Page Count'} text={comic?.pageCount} />
+          <InfoTextComponent label={'Page Count: '} text={comic?.pageCount} />
           <InfoTextComponent
-            label={'Stories'}
+            label={'Stories Count: '}
             text={comic?.stories?.available}
           />
-          <InfoTextComponent label={'Events'} text={comic?.events?.available} />
+          <InfoTextComponent
+            label={'Events Count: '}
+            text={comic?.events?.available}
+          />
         </View>
       </TouchableOpacity>
     );
