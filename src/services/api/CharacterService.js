@@ -11,13 +11,13 @@ class CharacterService {
 
   getCharacter = async ({characterId}) => {
     return axios.get(
-      `${Config.API_URL}/v1/public/characters${characterId}?${axiosQueryParams}`,
+      `${Config.API_URL}/v1/public/characters/${characterId}?${axiosQueryParams}`,
     );
   };
 
   getComicsOfCharacter = async ({characterId}) => {
     return axios.get(
-      `${Config.API_URL}/v1/public/characters${characterId}/comics?${axiosQueryParams}`,
+      `${Config.API_URL}/v1/public/characters/${characterId}/comics?${axiosQueryParams}`,
     );
   };
 }

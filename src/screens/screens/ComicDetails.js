@@ -52,7 +52,6 @@ class ComicDetails extends Component {
 
   render() {
     const {comic} = this.state;
-    console.log('comic detail: ', comic);
     return this.state.page_loading ? (
       <AnimatedLoadingComponent />
     ) : (

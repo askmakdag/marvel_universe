@@ -17,7 +17,6 @@ class CharacterListComponent extends Component {
     const {comicId} = this.props;
     const {data} = await ComicService.getCharactersOfComic({comicId});
     this.setState({characters: data.data.results});
-    console.log('data: ', data);
   };
 
   renderHeader = () => {
@@ -41,16 +40,21 @@ class CharacterListComponent extends Component {
         <FlatList
           data={characters}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => this.navigateToDetails(item)}>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+            <TouchableOpacity
+              style={styles.listItemContainerStyle}
+              onPress={() => this.navigateToDetails(item)}>
+              <View style={styles.listItemStyle}>
                 <CacheImageComponent
                   uri={`${item?.thumbnail?.path}/${portrait.uncanny}.${item?.thumbnail?.extension}`}
                   style={styles.imageStyle}
                 />
-                <Text style={styles.descriptionStyle}>{item.description}</Text>
+                <View style={styles.descriptionContainerStyle}>
+                  <Text style={styles.titleStyle}>{item.name}</Text>
+                  <Text style={styles.descriptionStyle}>
+                    {item.description}
+                  </Text>
+                </View>
               </View>
-              <Text>{item.name}</Text>
             </TouchableOpacity>
           )}
           ListHeaderComponent={this.renderHeader}
@@ -69,14 +73,33 @@ class CharacterListComponent extends Component {
 }
 
 const styles = StyleSheet.create({
+  listItemContainerStyle: {
+    marginVertical: 5,
+  },
+  listItemStyle: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
   imageStyle: {
     height: (DEVICE_WIDTH * 0.35 * 3) / 2,
     width: DEVICE_WIDTH * 0.35,
   },
+  titleStyle: {
+    fontWeight: 'bold',
+    marginLeft: 5,
+    flex: 2,
+  },
   descriptionStyle: {
+    marginTop: 5,
+    paddingRight: 5,
+    flex: 9,
+  },
+  descriptionContainerStyle: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     width: DEVICE_WIDTH * 0.6,
     marginLeft: DEVICE_WIDTH * 0.025,
-    maxHeight: (DEVICE_WIDTH * 0.35 * 3) / 2,
+    height: (DEVICE_WIDTH * 0.35 * 3) / 2,
   },
 });
 
