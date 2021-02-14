@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import axios from 'axios';
-import {axiosQueryParams} from '../../../helpers/AxiosHelper';
-import {DEVICE_WIDTH, portrait} from '../../../common/constants';
-import CacheImageComponent from '../CacheImageComponent';
+import {axiosQueryParams} from '../../../../helpers/AxiosHelper';
+import {portrait} from '../../../../common/constants';
+import CacheImageComponent from '../../CacheImageComponent';
+import {styles} from '../styles/CreatorListComponentStyles';
 
 class CreatorListComponent extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class CreatorListComponent extends Component {
               uri={`${creator?.thumbnail?.path}/${portrait.uncanny}.${creator?.thumbnail?.extension}`}
               style={styles.imageStyle}
             />
-            <Text>{creator.fullName}</Text>
+            <Text style={styles.creatorTextStyle}>{creator.fullName}</Text>
           </View>,
         );
       });
@@ -64,35 +65,5 @@ class CreatorListComponent extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  containerStyle: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginVertical: 10,
-  },
-  itemContainerStyle: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginVertical: 10,
-  },
-  imageStyle: {
-    height: (DEVICE_WIDTH * 0.35 * 3) / 2,
-    width: DEVICE_WIDTH * 0.35,
-    marginRight: 25,
-    borderRadius: 10,
-    marginVertical: 7.5,
-  },
-  titleStyle: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    color: '#10589f',
-  },
-  titleContainerStyle: {
-    borderColor: 'orange',
-    borderBottomWidth: 2,
-    paddingVertical: 5,
-  },
-});
 
 export default CreatorListComponent;

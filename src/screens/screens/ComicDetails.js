@@ -7,8 +7,8 @@ import HorizontalScrollImages from '../../components/components/HorizontalScroll
 import {styles} from '../styles/ComicDetailsStyles';
 import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 import CacheImageComponent from '../../components/components/CacheImageComponent';
-import CharacterListComponent from '../../components/components/listComponents/CharacterListComponent';
-import CreatorListComponent from '../../components/components/listComponents/CreatorListComponent';
+import CharacterListComponent from '../../components/components/listComponents/components/CharacterListComponent';
+import CreatorListComponent from '../../components/components/listComponents/components/CreatorListComponent';
 
 class ComicDetails extends Component {
   constructor(props) {

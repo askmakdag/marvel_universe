@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import CacheImageComponent from '../CacheImageComponent';
-import {DEVICE_WIDTH, portrait} from '../../../common/constants';
-import ComicService from '../../../services/api/ComicService';
+import {Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import CacheImageComponent from '../../CacheImageComponent';
+import {portrait} from '../../../../common/constants';
+import ComicService from '../../../../services/api/ComicService';
+import {styles} from '../styles/CharacterListComponentStyles';
 
 class CharacterListComponent extends Component {
   constructor(props) {
@@ -81,44 +76,5 @@ class CharacterListComponent extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  listItemContainerStyle: {
-    marginVertical: 5,
-  },
-  listItemStyle: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  headerContainerStyle: {
-    paddingVertical: 5,
-    marginBottom: 5,
-    borderBottomWidth: 2,
-    borderColor: 'orange',
-  },
-  headerTextStyle: {
-    fontWeight: 'bold',
-    color: '#10589f',
-  },
-  imageStyle: {
-    height: (DEVICE_WIDTH * 0.35 * 3) / 2,
-    width: DEVICE_WIDTH * 0.35,
-  },
-  titleStyle: {
-    fontWeight: 'bold',
-    marginLeft: 5,
-    flex: 2,
-  },
-  descriptionStyle: {
-    marginTop: 5,
-    paddingRight: 5,
-    flex: 9,
-  },
-  descriptionContainerStyle: {
-    width: DEVICE_WIDTH * 0.6,
-    marginLeft: DEVICE_WIDTH * 0.025,
-    height: (DEVICE_WIDTH * 0.35 * 3) / 2,
-  },
-});
 
 export default CharacterListComponent;

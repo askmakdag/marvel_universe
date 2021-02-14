@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ScrollView, View, Text, TouchableOpacity, Linking} from 'react-native';
 import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 import _ from 'lodash';
-import ComicListComponent from '../../components/components/listComponents/ComicListComponent';
+import ComicListComponent from '../../components/components/listComponents/components/ComicListComponent';
 import CharacterService from '../../services/api/CharacterService';
 import {styles} from '../styles/CharacterDetailsStyles';
 import CacheImageComponent from '../../components/components/CacheImageComponent';
