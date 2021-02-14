@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  FlatList,
   Text,
   View,
   ScrollView,
@@ -16,22 +15,18 @@ class CharacterListComponent extends Component {
     super(props);
     this.state = {
       refreshing: false,
-      characters: [],
+      items: [],
     };
   }
 
   UNSAFE_componentWillMount = async () => {
     const {comicId} = this.props;
-    const {data} = await ComicService.getCharactersOfComic({comicId});
-    this.setState({characters: data.data.results});
+    await this.getCharacters(comicId);
   };
 
-  renderHeader = () => {
-    return (
-      <View style={styles.headerContainerStyle}>
-        <Text style={styles.headerTextStyle}>CHARACTERS</Text>
-      </View>
-    );
+  getCharacters = async (comicId) => {
+    const {data} = await ComicService.getCharactersOfComic({comicId});
+    await this.fillScrollView(data.data.results);
   };
 
   navigateToDetails = (character) => {
@@ -40,41 +35,48 @@ class CharacterListComponent extends Component {
     });
   };
 
-  render() {
-    const {characters} = this.state;
-    return (
-      <View display={characters?.length === 0 ? 'none' : 'flex'}>
-        <FlatList
-          data={characters}
-          renderItem={({item}) => (
-            <View style={styles.listItemContainerStyle}>
-              <View style={styles.listItemStyle}>
-                <TouchableOpacity onPress={() => this.navigateToDetails(item)}>
-                  <CacheImageComponent
-                    uri={`${item?.thumbnail?.path}/${portrait.uncanny}.${item?.thumbnail?.extension}`}
-                    style={styles.imageStyle}
-                  />
-                </TouchableOpacity>
+  fillScrollView = async (items) => {
+    let scroll_images = [];
 
-                <ScrollView style={styles.descriptionContainerStyle}>
-                  <Text style={styles.titleStyle}>{item.name}</Text>
-                  <Text style={styles.descriptionStyle}>
-                    {item.description}
-                  </Text>
-                </ScrollView>
-              </View>
+    if (items) {
+      await items.forEach((item, index) => {
+        scroll_images.push(
+          <View style={styles.listItemContainerStyle}>
+            <View style={styles.listItemStyle}>
+              <TouchableOpacity onPress={() => this.navigateToDetails(item)}>
+                <CacheImageComponent
+                  uri={`${item?.thumbnail?.path}/${portrait.uncanny}.${item?.thumbnail?.extension}`}
+                  style={styles.imageStyle}
+                />
+              </TouchableOpacity>
+
+              <ScrollView style={styles.descriptionContainerStyle}>
+                <Text style={styles.titleStyle}>{item.name}</Text>
+                <Text style={styles.descriptionStyle}>{item.description}</Text>
+              </ScrollView>
             </View>
-          )}
-          ListHeaderComponent={this.renderHeader}
-          keyExtractor={(item) => item.id}
-          refreshing={this.state.refreshing}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{flexGrow: 1}}
-          style={{flex: 1}}
-          onEndReachedThreshold={1}
-          initialNumToRender={1}
-          numColumns={2}
-        />
+          </View>,
+        );
+      });
+    }
+
+    await this.setState({items: scroll_images});
+  };
+
+  render() {
+    const {items} = this.state;
+    return (
+      <View display={items?.length === 0 ? 'none' : 'flex'}>
+        <View style={styles.headerContainerStyle}>
+          <Text style={styles.headerTextStyle}>CHARACTERS</Text>
+        </View>
+
+        <ScrollView
+          horizontal={true}
+          pagingEnabled={false}
+          showsHorizontalScrollIndicator={false}>
+          {items}
+        </ScrollView>
       </View>
     );
   }
@@ -96,6 +98,7 @@ const styles = StyleSheet.create({
   },
   headerTextStyle: {
     fontWeight: 'bold',
+    color: '#10589f',
   },
   imageStyle: {
     height: (DEVICE_WIDTH * 0.35 * 3) / 2,

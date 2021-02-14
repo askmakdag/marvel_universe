@@ -8,6 +8,7 @@ import {styles} from '../styles/ComicDetailsStyles';
 import AnimatedLoadingComponent from '../../components/components/AnimatedLoadingComponent';
 import CacheImageComponent from '../../components/components/CacheImageComponent';
 import CharacterListComponent from '../../components/components/listComponents/CharacterListComponent';
+import CreatorListComponent from '../../components/components/listComponents/CreatorListComponent';
 
 class ComicDetails extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class ComicDetails extends Component {
           <View style={styles.comicInfoTopRightStyle}>
             <Text style={styles.comicTitleStyle}>{comic.title}</Text>
             <Text style={styles.comicInfoStyle}>
-              {'Pages: ' + comic.pageCount}
+              {'Page Count: ' + comic.pageCount}
             </Text>
             <TouchableOpacity onPress={this.OpenDetailPage}>
               <Text style={styles.linkTextStyle}>
@@ -87,10 +88,20 @@ class ComicDetails extends Component {
           />
         </View>
 
-        <CharacterListComponent
-          comicId={comic?.id}
-          navigation={this.props.navigation}
-        />
+        <View style={styles.middleColumnStyle}>
+          <CreatorListComponent
+            title={'CREATORS OF THE COMIC'}
+            collectionURI={comic?.creators?.collectionURI}
+            navigation={this.props.navigation}
+          />
+        </View>
+
+        <View style={styles.middleColumnStyle}>
+          <CharacterListComponent
+            comicId={comic?.id}
+            navigation={this.props.navigation}
+          />
+        </View>
       </ScrollView>
     );
   }

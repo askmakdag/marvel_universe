@@ -22,7 +22,6 @@ class ComicListComponent extends Component {
 
   UNSAFE_componentWillMount = async () => {
     const {characterId} = this.props;
-    console.log('characterId: ', characterId);
     const {data} = await CharacterService.getComicsOfCharacter({characterId});
     this.setState({comics: data.data.results});
   };
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
   },
   headerTextStyle: {
     fontWeight: 'bold',
+    color: '#10589f',
   },
   listItemStyle: {
     flexDirection: 'row',
@@ -118,8 +118,6 @@ const styles = StyleSheet.create({
     flex: 9,
   },
   descriptionContainerStyle: {
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
     width: DEVICE_WIDTH * 0.6,
     marginLeft: DEVICE_WIDTH * 0.025,
     height: (DEVICE_WIDTH * 0.35 * 3) / 2,

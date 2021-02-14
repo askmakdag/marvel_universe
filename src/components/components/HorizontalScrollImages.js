@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   imageStyle: {
-    height: (DEVICE_WIDTH * 0.4 * 3) / 2,
-    width: DEVICE_WIDTH * 0.4,
+    height: (DEVICE_WIDTH * 0.35 * 3) / 2,
+    width: DEVICE_WIDTH * 0.35,
     marginRight: 25,
     borderRadius: 10,
     marginVertical: 7.5,
