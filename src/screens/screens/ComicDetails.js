@@ -82,7 +82,7 @@ class ComicDetails extends Component {
             </Text>
           </View>
           <HorizontalScrollImages
-            title={'COMIC COVER HISTORY'}
+            title={'COMIC COVERS HISTORY'}
             images={comic.images}
           />
         </View>

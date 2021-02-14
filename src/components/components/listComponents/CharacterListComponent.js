@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {FlatList, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  FlatList,
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import CacheImageComponent from '../CacheImageComponent';
 import {DEVICE_WIDTH, portrait} from '../../../common/constants';
 import ComicService from '../../../services/api/ComicService';
@@ -21,8 +28,8 @@ class CharacterListComponent extends Component {
 
   renderHeader = () => {
     return (
-      <View>
-        <Text>Characters</Text>
+      <View style={styles.headerContainerStyle}>
+        <Text style={styles.headerTextStyle}>CHARACTERS</Text>
       </View>
     );
   };
@@ -40,22 +47,23 @@ class CharacterListComponent extends Component {
         <FlatList
           data={characters}
           renderItem={({item}) => (
-            <TouchableOpacity
-              style={styles.listItemContainerStyle}
-              onPress={() => this.navigateToDetails(item)}>
+            <View style={styles.listItemContainerStyle}>
               <View style={styles.listItemStyle}>
-                <CacheImageComponent
-                  uri={`${item?.thumbnail?.path}/${portrait.uncanny}.${item?.thumbnail?.extension}`}
-                  style={styles.imageStyle}
-                />
-                <View style={styles.descriptionContainerStyle}>
+                <TouchableOpacity onPress={() => this.navigateToDetails(item)}>
+                  <CacheImageComponent
+                    uri={`${item?.thumbnail?.path}/${portrait.uncanny}.${item?.thumbnail?.extension}`}
+                    style={styles.imageStyle}
+                  />
+                </TouchableOpacity>
+
+                <ScrollView style={styles.descriptionContainerStyle}>
                   <Text style={styles.titleStyle}>{item.name}</Text>
                   <Text style={styles.descriptionStyle}>
                     {item.description}
                   </Text>
-                </View>
+                </ScrollView>
               </View>
-            </TouchableOpacity>
+            </View>
           )}
           ListHeaderComponent={this.renderHeader}
           keyExtractor={(item) => item.id}
@@ -80,6 +88,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
+  headerContainerStyle: {
+    paddingVertical: 5,
+    marginBottom: 5,
+    borderBottomWidth: 2,
+    borderColor: 'orange',
+  },
+  headerTextStyle: {
+    fontWeight: 'bold',
+  },
   imageStyle: {
     height: (DEVICE_WIDTH * 0.35 * 3) / 2,
     width: DEVICE_WIDTH * 0.35,
@@ -95,8 +112,6 @@ const styles = StyleSheet.create({
     flex: 9,
   },
   descriptionContainerStyle: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
     width: DEVICE_WIDTH * 0.6,
     marginLeft: DEVICE_WIDTH * 0.025,
     height: (DEVICE_WIDTH * 0.35 * 3) / 2,

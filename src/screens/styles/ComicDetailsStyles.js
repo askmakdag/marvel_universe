@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   comicInfoStyle: {
     fontSize: 15,
-    marginHorizontal: 5,
+    marginHorizontal: 7.5,
     paddingTop: 5,
   },
   linkTextStyle: {

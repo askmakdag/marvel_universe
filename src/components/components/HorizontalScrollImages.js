@@ -45,7 +45,9 @@ class HorizontalScrollImages extends Component {
       <View
         display={images.length === 0 ? 'none' : 'flex'}
         style={styles.containerStyle}>
-        <Text style={styles.titleStyle}>{title}</Text>
+        <View style={styles.titleContainerStyle}>
+          <Text style={styles.titleStyle}>{title}</Text>
+        </View>
         <ScrollView
           horizontal={true}
           pagingEnabled={false}
@@ -61,10 +63,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginVertical: 20,
-    borderTopWidth: 3,
-    borderBottomWidth: 3,
-    borderColor: 'orange',
+    marginVertical: 10,
   },
   imageStyle: {
     height: (DEVICE_WIDTH * 0.4 * 3) / 2,
@@ -76,8 +75,12 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontWeight: 'bold',
     fontSize: 15,
-    marginLeft: 5,
     color: '#10589f',
+  },
+  titleContainerStyle: {
+    borderColor: 'orange',
+    borderBottomWidth: 2,
+    paddingVertical: 5,
   },
 });
 
